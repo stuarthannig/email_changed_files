@@ -19,7 +19,7 @@ files=( $(find $FOLDER_PATH -ctime -1 2> /dev/null) )
 echo '=============================================='
 
 # Remove file instances that match from ignored folders list
-for ign_folder in ${IGNORED_FOLDERS[@]}; do
+for ign_folder in "${IGNORED_FOLDERS[@]}"; do
   # Construct absolute path
   ign_folder="$FOLDER_PATH$ign_folder"
   
@@ -31,20 +31,20 @@ for ign_folder in ${IGNORED_FOLDERS[@]}; do
 done
 
 # Remove file instances that match from ignored files list
-for ign_file in ${IGNORED_FILES[@]}; do
+for ign_file in "${IGNORED_FILES[@]}"; do
   # Remove ignored files with pattern match
   files=( ${files[@]/*$ign_file/} )
 done
 
 # Display results to terminal screen
-for file in ${files[@]}; do
+for file in "${files[@]}"; do
   echo $file
   output+="$file\n" # Add newline for email output
 done
 
 # Send an email with list of changed files
 message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM\n$output"
-echo -e $message | sendmail $EMAIL_TO 
+echo -e "$message" | sendmail $EMAIL_TO 
 echo "Email sent to $EMAIL_TO"
 
 unset files
