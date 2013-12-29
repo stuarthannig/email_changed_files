@@ -14,3 +14,15 @@ declare -a IGNORED_FOLDERS=(
 echo 'Fecthing changes, this may take a few minutes.'
 files=( $(find $FOLDER_PATH -ctime -1 2> /dev/null) )
 echo '=============================================='
+
+# Remove file instances that match from ignored folders list
+for folder in ${IGNORED_FOLDERS[@]}; do
+	# Construct absolute path
+	folder="$FOLDER_PATH$folder"
+  
+  # Escape forward-slashes
+  folder=${folder//\//\\\/}
+
+  # Remove ignored folder files with pattern match
+  files=( ${files[@]/$folder*/} )
+done
