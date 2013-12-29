@@ -6,11 +6,11 @@ EMAIL_FROM='sender@email.com'
 EMAIL_SUBJECT="File changes on $(date +%Y-%m-%d)"
 FOLDER_PATH='/home/[username]/public_html'
 declare -a IGNORED_FOLDERS=(
-	'/images/user-cards'
-	'/images/profile-covers'
+  '/images/user-cards'
+  '/images/profile-covers'
 );
 declare -a IGNORED_FILES=(
-	'error_log'
+  'error_log'
 );
 
 # Find all changes made in the past 1 day (24h), send errors to /dev/null
@@ -20,8 +20,8 @@ echo '=============================================='
 
 # Remove file instances that match from ignored folders list
 for ign_folder in ${IGNORED_FOLDERS[@]}; do
-	# Construct absolute path
-	ign_folder="$FOLDER_PATH$ign_folder"
+  # Construct absolute path
+  ign_folder="$FOLDER_PATH$ign_folder"
   
   # Escape forward-slashes
   ign_folder=${ign_folder//\//\\\/}
@@ -38,7 +38,7 @@ done
 
 # Display results to terminal screen
 for file in ${files[@]}; do
-	echo $file
+  echo $file
   output+="$file\n" # Add newline for email output
 done
 
