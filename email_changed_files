@@ -10,7 +10,7 @@ declare -a IGNORED_FOLDERS=(
 	'/images/profile-covers'
 );
 
-# Find all changes made in the past day (24h), send errors to /dev/null
+# Find all changes made in the past 1 day, send errors to /dev/null
 echo 'Fecthing changes, this may take a few minutes.'
 files=( $(find $FOLDER_PATH -ctime -1 2> /dev/null) )
 echo '=============================================='
@@ -27,6 +27,17 @@ for folder in ${IGNORED_FOLDERS[@]}; do
   files=( ${files[@]/$folder*/} )
 done
 
+# Display results to terminal screen
 for file in ${files[@]}; do
   echo $file
 done
+
+# Send an email with list of changed files
+sendmail $EMAIL_TO <<EOF
+subject:$EMAIL_SUBJECT
+from:$EMAIL_FROM
+${files[@]}
+EOF
+echo "Email sent to $EMAIL_TO"
+
+unset files
