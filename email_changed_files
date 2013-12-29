@@ -9,3 +9,8 @@ declare -a IGNORED_FOLDERS=(
 	'/images/user-cards'
 	'/images/profile-covers'
 );
+
+# Find all changes made in the past day (24h), send errors to /dev/null
+echo 'Fecthing changes, this may take a few minutes.'
+files=( $(find $FOLDER_PATH -ctime -1 2> /dev/null) )
+echo '=============================================='
