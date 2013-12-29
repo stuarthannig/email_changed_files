@@ -28,16 +28,15 @@ for folder in ${IGNORED_FOLDERS[@]}; do
 done
 
 # Display results to terminal screen
+n=0
 for file in ${files[@]}; do
-  echo $file
+	echo $file
+  output+="$file\n" # Add newline for email output
 done
 
 # Send an email with list of changed files
-sendmail $EMAIL_TO <<EOF
-subject:$EMAIL_SUBJECT
-from:$EMAIL_FROM
-${files[@]}
-EOF
+message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM\n$output"
+echo -e $message | sendmail $EMAIL_TO 
 echo "Email sent to $EMAIL_TO"
 
 unset files
