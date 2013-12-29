@@ -26,3 +26,7 @@ for folder in ${IGNORED_FOLDERS[@]}; do
   # Remove ignored folder files with pattern match
   files=( ${files[@]/$folder*/} )
 done
+
+for file in ${files[@]}; do
+  echo $file
+done
