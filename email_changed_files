@@ -1,3 +1,11 @@
 #! /bin/bash
 
-# Hello, World!
+# Config variable, modify to your needs
+EMAIL_TO='recipient@email.com'
+EMAIL_FROM='sender@email.com'
+EMAIL_SUBJECT="File changes for $(date +%Y-%m-%d)"
+FOLDER_PATH='/home/[username]/public_html'
+declare -a IGNORED_FOLDERS=(
+	'/images/user-cards'
+	'/images/profile-covers'
+);
