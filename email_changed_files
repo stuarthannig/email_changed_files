@@ -15,24 +15,24 @@ declare -a IGNORED_FILES=(
 
 # Construct statement to ignore defined folders
 for ign_folder in "${IGNORED_FOLDERS[@]}"; do
-  statement+=" ! -path *$ign_folder*"
+  statements+=(! -path "*$ign_folder*")
 done
 
 # Construct statement to ignore defined files
 for ign_file in "${IGNORED_FILES[@]}"; do
-  statement+=" ! -name $ign_file"
+  statements+=(! -name "$ign_file")
 done
 
 # Find all changes made in the past 1 day (24h), send errors to /dev/null
 echo 'Fecthing changes, this may take a few minutes.'
-files=( $(find $FOLDER_PATH -ctime -1 -type f $statement 2> /dev/null) )
+files=( $(find "$FOLDER_PATH" -ctime -1 -type f "${statements[@]}" 2> /dev/null) )
 echo '=============================================='
 
 # Display results to terminal screen
 for file in "${files[@]}"; do
   echo $file
   output+="$file\n" # Add newline for email output
-dones
+done
 
 # Send an email with list of changed files
 message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM\n$output"
