@@ -13,30 +13,24 @@ declare -a IGNORED_FILES=(
   'error_log'
 );
 
-# Construct statement to ignore defined folders
+# Construct statements to ignore defined folders
 for ign_folder in "${IGNORED_FOLDERS[@]}"; do
   statements+=(! -path "*$ign_folder*")
 done
 
-# Construct statement to ignore defined files
+# Construct statements to ignore defined files
 for ign_file in "${IGNORED_FILES[@]}"; do
   statements+=(! -name "$ign_file")
 done
 
-# Find all changes made in the past 1 day (24h), send errors to /dev/null
-echo 'Fecthing changes, this may take a few minutes.'
-files=( $(find "$FOLDER_PATH" -ctime -1 -type f "${statements[@]}" 2> /dev/null) )
-echo '=============================================='
-
-# Display results to terminal screen
-for file in "${files[@]}"; do
-  echo $file
-  output+="$file\n" # Add newline for email output
-done
-
-# Send an email with list of changed files
+# Prepare email message
 message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM\n$output"
-echo -e "$message" | sendmail $EMAIL_TO 
-echo "Email sent to $EMAIL_TO"
 
-unset files
+echo 'Fecthing changes, this may take a few minutes...'
+
+# Find all changes made in the past 1 day (24h)
+# Send results to configured email and any errors to dev/null
+# Results printed to terminal (tee) if ran via command line
+find "$FOLDER_PATH" -ctime -1 -type f "${statements[@]}" 2> /dev/null | tee >({ echo -e "$message"; cat; } | sendmail $EMAIL_TO)
+
+echo "Email report sent to $EMAIL_TO"
