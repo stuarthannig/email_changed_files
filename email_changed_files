@@ -24,7 +24,7 @@ for ign_file in "${IGNORED_FILES[@]}"; do
 done
 
 # Prepare email message
-message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM\n$output"
+message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM"
 
 echo 'Fecthing changes, this may take a few minutes...'
 
