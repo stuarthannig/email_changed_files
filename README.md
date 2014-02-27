@@ -23,7 +23,7 @@ Use-case
 2. Change the configuration variable at the beginning of the script to your needs.
 2. Upload `email_cheanged_files` script to `/bin/` folder in your user's home directory (not root).
 3. Right-click on uploaded file and CHMOD to `755`.
-4. Proceed to Step 5 of the command line instructions.
+4. Proceed to Step 5 of the command-line instructions.
 
 #### via Command-line
 
