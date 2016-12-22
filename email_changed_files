@@ -26,7 +26,7 @@ done
 # Prepare email message
 message="subject:$EMAIL_SUBJECT\nfrom:$EMAIL_FROM"
 
-echo 'Fecthing changes, this may take a few minutes...'
+echo 'Fetching changes, this may take a few minutes...'
 
 # Find all changes made in the past 1 day (24h)
 # Send results to configured email and any errors to dev/null
