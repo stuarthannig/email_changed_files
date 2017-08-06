@@ -13,7 +13,7 @@ Use-case
 
 ---
 
-##Install
+## Install
 
 > **NOTE:** .You should have fundamental understanding of Bash and Systems Administration before attempting to install and use.
 
